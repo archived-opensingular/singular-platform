@@ -1,0 +1,1 @@
+call ..\wildfly\bin\standalone.bat 
