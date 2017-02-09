@@ -5,26 +5,16 @@ project.ext {
   opensingularDir='build/opensingular'
 }
 
-task downloadWildFly {
-  doLast {
-    def wildfly = new File('wildfly.zip')
-      if (!wildfly.exists()) {
-        new URL('http://download.jboss.org/wildfly/'+wilflyVersion+'/wildfly-'+wildflyVersion+'.zip').withInputStream{ i -> wildfly.withOutputStream{ it << i }}
-      }		
-  }	
-}
-
-task unzipWildFly(type: Copy){
+task configureWildFly(type: Copy){
+  def wildflyzip = new File('wildfly.zip')
+  if (!wildflyzip.exists()) {
+     new URL('http://download.jboss.org/wildfly/'+wildflyVersion+'/wildfly-'+wildflyVersion+'.zip').withInputStream{ i -> wildflyzip.withOutputStream{ it << i }}
+  }   
   def wildfly = new File('wildfly')
-    def wildflyzip = new File('wildfly.zip')
-    if (wildflyzip.exists() && !wildfly.exists()) {
-      from zipTree('wildfly.zip')
-      into wildfly
-    }
-}
-
-task configureWildFly(dependsOn: ['downloadWildFly', 'unzipWildFly']) {
-
+  if (wildflyzip.exists() && !wildfly.exists()) {
+    from zipTree('wildfly.zip')
+    into wildfly
+  }
 }
 
 task createFolders {
