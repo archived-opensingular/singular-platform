@@ -1,39 +1,39 @@
 apply plugin: 'java'
 
 task downloadWildFly {
-	doLast {
-		def wildfly = new File('wildfly.zip')
-		if (!wildfly.exists()) {
-			new URL('http://download.jboss.org/wildfly/9.0.2.Final/wildfly-9.0.2.Final.zip').withInputStream{ i -> wildfly.withOutputStream{ it << i }}
-		}		
-	}	
+  doLast {
+    def wildfly = new File('wildfly.zip')
+      if (!wildfly.exists()) {
+        new URL('http://download.jboss.org/wildfly/9.0.2.Final/wildfly-9.0.2.Final.zip').withInputStream{ i -> wildfly.withOutputStream{ it << i }}
+      }		
+  }	
 }
 
 task unzipWildFly(type: Copy){
-	def wildfly = new File('wildfly')
-	def wildflyzip = new File('wildfly.zip')
-	if (wildflyzip.exists() && !wildfly.exists()) {
-		from zipTree('wildfly.zip')
-		into wildfly
-	}
+  def wildfly = new File('wildfly')
+    def wildflyzip = new File('wildfly.zip')
+    if (wildflyzip.exists() && !wildfly.exists()) {
+      from zipTree('wildfly.zip')
+        into wildfly
+    }
 }
 
 task configureWildFly(dependsOn: ['downloadWildFly', 'unzipWildFly']) {
-	
+
 }
 
 task createFolders {
   doLast {
     mkdir('build/opensingular')
-    mkdir('build/opensingular/wildfly')
-    mkdir('build/opensingular/lib')
-    mkdir('build/opensingular/mongo')
-    mkdir('build/opensingular/tmp')
-    mkdir('build/opensingular/deploy')
-    mkdir('build/opensingular/bin')
-    mkdir('build/opensingular/logs')
-    mkdir('build/opensingular/conf')
-    mkdir('build/opensingular/runtime')
+      mkdir('build/opensingular/wildfly')
+      mkdir('build/opensingular/lib')
+      mkdir('build/opensingular/mongo')
+      mkdir('build/opensingular/tmp')
+      mkdir('build/opensingular/deploy')
+      mkdir('build/opensingular/bin')
+      mkdir('build/opensingular/logs')
+      mkdir('build/opensingular/conf')
+      mkdir('build/opensingular/runtime')
   }
 }
 
@@ -41,19 +41,19 @@ task copyContents {
   doLast {
     copy {
       from 'resources/bin'
-      into 'build/opensingular/bin'
+        into 'build/opensingular/bin'
     }
-	copy {
-		from 'wildfly/wildfly-9.0.2.Final'
-		into 'build/opensingular/wildfly'
-	}
+    copy {
+      from 'wildfly/wildfly-9.0.2.Final'
+        into 'build/opensingular/wildfly'
+    }
     copy {
       from 'resources/wildfly'
-      into 'build/opensingular/wildfly'
+        into 'build/opensingular/wildfly'
     }
     copy {
       from 'resources/conf'
-      into 'build/opensingular/conf'
+        into 'build/opensingular/conf'
     }
   }
 }
