@@ -45,4 +45,6 @@ echo  Y888 888P  888 888P 888   , 888 888 b Y8D 888 888 888 Y888 888 Y888 888P 8
 echo   "88 88"   888 88"   "YeeP" 888 888 8edP  888 888 888  "88 888  "88 88"  888 "88 888 888    
 echo             888                                          ,  88P                              
 echo             888                                         "8",P"      
-call ..\wildfly\bin\standalone.bat 
+
+set plataform_home=%~dp0\..
+call %plataform_home%\wildfly\bin\standalone.bat 

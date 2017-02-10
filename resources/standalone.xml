@@ -106,6 +106,15 @@
                 <suffix value=".yyyy-MM-dd"/>
                 <append value="true"/>
             </periodic-rotating-file-handler>
+			<periodic-rotating-file-handler name="SINGULARLOG" autoflush="true">
+				<level name="INFO"/>
+                <formatter>
+                    <named-formatter name="PATTERN"/>
+                </formatter>
+                <file relative-to="jboss.home.dir" path="..${file.separator}log${file.separator}singular.log"/>
+                <suffix value=".yyyy-MM-dd"/>
+                <append value="true"/>
+            </periodic-rotating-file-handler>
             <logger category="com.arjuna">
                 <level name="WARN"/>
             </logger>
@@ -129,6 +138,7 @@
                 <handlers>
                     <handler name="CONSOLE"/>
                     <handler name="FILE"/>
+					<handler name="SINGULARLOG"/>
                 </handlers>
             </root-logger>
             <formatter name="PATTERN">
