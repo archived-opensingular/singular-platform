@@ -1,4 +1,4 @@
-**/build/
-**/wildfly/
+build/**
+wildfly/**
 wildfly.zip
-**/.gradle/
+.gradle/**
