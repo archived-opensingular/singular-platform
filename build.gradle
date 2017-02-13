@@ -3,6 +3,7 @@ apply plugin: 'java'
 project.ext {
   wildflyVersion='9.0.2.Final'
   opensingularDir='build/opensingular'
+  singularVersion = '1.5.8-SNAPSHOT'
 }
 
 task configureWildFly(type: Copy){
@@ -55,6 +56,7 @@ task copyContents {
 
 task createZip (type: Zip) {
   from opensingularDir
+  archiveName 'singular-platarform-'+singularVersion+'.zip'
 }
 
 task install(dependsOn: ['configureWildFly', 'clean', 'createFolders', 'copyContents', 'createZip']) {
