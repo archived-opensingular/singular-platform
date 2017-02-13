@@ -47,4 +47,8 @@ echo '            888                                          ,  88P           
 echo '            888                                         "8",P"      '
 DIRNAME=$(dirname "$0")
 SINGULAR_PLATAFORM_HOME=$(cd "$DIRNAME/.."; pwd)
+SINGULAR_LIB=$(cd "$SINGULAR_PLATAFORM_HOME/lib"; pwd)
+SINGULAR_WILDFLY=$(cd "$SINGULAR_PLATAFORM_HOME/wildfly"; pwd)
+JBOSS_MODULEPATH=$SINGULAR_LIB:$SINGULAR_WILDFLY/modules
+export JBOSS_MODULEPATH
 sh $SINGULAR_PLATAFORM_HOME/wildfly/bin/standalone.sh
