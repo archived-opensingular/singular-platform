@@ -45,6 +45,9 @@ echo  Y888 888P  888 888P 888   , 888 888 b Y8D 888 888 888 Y888 888 Y888 888P 8
 echo   "88 88"   888 88"   "YeeP" 888 888 8edP  888 888 888  "88 888  "88 88"  888 "88 888 888    
 echo             888                                          ,  88P                              
 echo             888                                         "8",P"      
-
-set plataform_home=%~dp0\..
-call %plataform_home%\wildfly\bin\standalone.bat 
+set DIRNAME=%~dp0%
+set SINGULAR_PLATAFORM_HOME=%DIRNAME%\..
+set SINGULAR_LIB=%SINGULAR_PLATAFORM_HOME%\lib
+set SINGULAR_WILDFLY=%SINGULAR_PLATAFORM_HOME%\wildfly
+set JBOSS_MODULEPATH=%SINGULAR_LIB%;%SINGULAR_WILDFLY%\modules
+call %SINGULAR_WILDFLY%\bin\standalone.bat 
