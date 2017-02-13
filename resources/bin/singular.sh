@@ -45,6 +45,6 @@ echo ' Y888 888P  888 888P 888   , 888 888 b Y8D 888 888 888 Y888 888 Y888 888P 
 echo '  "88 88"   888 88"   "YeeP" 888 888 8edP  888 888 888  "88 888  "88 88"  888 "88 888 888    '
 echo '            888                                          ,  88P                              '
 echo '            888                                         "8",P"      '
-
-PLATAFORM_HOME=$(dirname "$0")/..
-sh $PLATAFORM_HOME/wildfly/bin/standalone.sh
+DIRNAME=$(dirname "$0")
+SINGULAR_PLATAFORM_HOME=$(cd "$DIRNAME/.."; pwd)
+sh $SINGULAR_PLATAFORM_HOME/wildfly/bin/standalone.sh
