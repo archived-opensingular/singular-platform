@@ -30,9 +30,11 @@
     <extension module="org.wildfly.extension.undertow"/>
   </extensions>
   <system-properties>
-    <property name="javax.net.ssl.trustStore" value="${jboss.home.dir}${file.separator}..${file.separator}conf${file.separator}singular.truststore"/>
-    <property name="singular.server.home" value="${jboss.server.config.dir}${file.separator}.."/>
-    <property name="javax.net.ssl.trustStorePassword" value="password"/>
+          <property name="javax.net.ssl.trustStore" value="${jboss.home.dir}${file.separator}..${file.separator}conf${file.separator}singular.truststore"/>
+        <property name="javax.net.ssl.trustStorePassword" value="password"/>
+        <property name="javax.net.ssl.keyStore" value="${jboss.home.dir}${file.separator}..${file.separator}conf${file.separator}singular.keystore"/>
+        <property name="javax.net.ssl.keyStorePassword" value="password"/>
+        <property name="singular.server.home" value="${jboss.server.config.dir}${file.separator}.."/>
   </system-properties>
   <management>
     <security-realms>
@@ -368,7 +370,7 @@
       <buffer-cache name="default"/>
       <server name="default-server">
         <http-listener name="default" socket-binding="http" redirect-socket="https" max-post-size="10485760000"/>
-        <https-listener name="https" socket-binding="https" security-realm="SingularRealm" max-post-size="10485760000"/>
+        <https-listener name="https" socket-binding="https" security-realm="SingularRealm" max-post-size="10485760000"  verify-client="REQUESTED"/>
         <host name="default-host" alias="localhost">
           <location name="/" handler="welcome-content"/>
           <filter-ref name="server-header"/>
