@@ -1,4 +1,4 @@
-# singular-plataform
+# singular-platform
 
 Plataforma OpenSingular
 
