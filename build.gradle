@@ -1,9 +1,11 @@
 apply plugin: 'java'
 
+defaultTasks 'buildPlatform'
+
 project.ext {
   wildflyVersion='9.0.2.Final'
   opensingularDir='build/opensingular'
-  singularVersion = '1.5.8-SNAPSHOT'
+  singularVersion = '1.0.0'
 }
 
 task configureWildFly(type: Copy){
@@ -30,6 +32,7 @@ task createFolders {
     mkdir(opensingularDir+'/logs')
     mkdir(opensingularDir+'/conf')
     mkdir(opensingularDir+'/runtime')
+	mkdir(opensingularDir+'/native')
   }
 }
 
@@ -51,15 +54,19 @@ task copyContents {
       from 'resources/conf'
       into opensingularDir+'/conf'
     }
+	copy {
+      from 'resources/native'
+      into opensingularDir+'/native'
+    }
   }
 }
 
 task createZip (type: Zip) {
   from opensingularDir
-  archiveName 'singular-platarform-'+singularVersion+'.zip'
+  archiveName 'singular-platform-'+singularVersion+'.zip'
 }
 
-task install(dependsOn: ['configureWildFly', 'clean', 'createFolders', 'copyContents', 'createZip']) {
+task buildPlatform(dependsOn: ['configureWildFly', 'clean', 'createFolders', 'copyContents', 'createZip']) {
   doLast {
     println 'ok'
   }
