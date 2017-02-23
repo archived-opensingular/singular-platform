@@ -5,5 +5,5 @@ Plataforma OpenSingular
 ## Como construir
 
 ```shell
-gradle install
+gradle 
 ```
