@@ -6,6 +6,9 @@ JAVA_HOME=""
 ## Additionals args to include in startup
 JBOSS_OPTS=""
 
+## THE JAVA OPTS
+JAVA_OPTS="$JAVA_OPTS -Xmx1536m"
+
 ## SCRIPT DIRECTORY FOLDER
 DIRNAME=$(dirname "$0")
 
@@ -21,19 +24,19 @@ SINGULAR_WILDFLY=$(cd "$SINGULAR_PLATAFORM_HOME/wildfly"; pwd)
 ## ADITIONAL MODULES
 JBOSS_MODULEPATH=$SINGULAR_LIB:$SINGULAR_WILDFLY/modules
 
-## EXPORT JBOSS_OPTS IF CONFIGURED
-if [ "x$JBOSS_OPTS" = "x" ]; then
-  export JBOSS_OPTS
+## EXPORT JBOSS_MODULEPATH IF CONFIGURED
+if [ "x$JBOSS_MODULEPATH" != "x" ]; then
+  export JBOSS_MODULEPATH
 fi
 
 ## EXPORT JAVA_HOME  IF CONFIGURED
-if [ "x$JAVA_HOME" = "x" ]; then
+if [ "x$JAVA_HOME" != "x" ]; then
   export JAVA_HOME
 fi
 
-## EXPORT JBOSS_OPTS  IF CONFIGURED
-if [ "x$JBOSS_OPTS" = "x" ]; then
-  export JBOSS_OPTS
+## EXPORT JAVA_OPTS  IF CONFIGURED
+if [ "x$JAVA_OPTS" != "x" ]; then
+  export JAVA_OPTS
 fi
 
 echo '==================================================================='
@@ -47,4 +50,4 @@ echo '                                                                   '
 echo 'Iniciando Singular Platform  em ' $(date)
 echo ''
 
-sh $SINGULAR_WILDFLY/bin/standalone.sh
+sh $SINGULAR_WILDFLY/bin/standalone.sh $JBOSS_OPTS
