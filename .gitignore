@@ -2,4 +2,5 @@ build/**
 wildfly
 wildfly/**
 wildfly.zip
+wildfly.tar.gz
 .gradle/**
