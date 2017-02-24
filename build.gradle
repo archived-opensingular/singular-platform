@@ -9,13 +9,13 @@ project.ext {
 }
 
 task configureWildFly(type: Copy){
-  def wildflyzip = new File('wildfly.zip')
+  def wildflyzip = new File('wildfly.tar.gz')
   if (!wildflyzip.exists()) {
-     new URL('http://download.jboss.org/wildfly/'+wildflyVersion+'/wildfly-'+wildflyVersion+'.zip').withInputStream{ i -> wildflyzip.withOutputStream{ it << i }}
+     new URL('http://download.jboss.org/wildfly/'+wildflyVersion+'/wildfly-'+wildflyVersion+'.tar.gz').withInputStream{ i -> wildflyzip.withOutputStream{ it << i }}
   }   
   def wildfly = new File('wildfly')
   if (wildflyzip.exists() && !wildfly.exists()) {
-    from zipTree('wildfly.zip')
+    from tarTree(resources.gzip('wildfly.tar.gz'))
     into wildfly
   }
 }
@@ -61,9 +61,10 @@ task copyContents {
   }
 }
 
-task createZip (type: Zip) {
+task createZip (type: Tar) {
+  compression = Compression.GZIP
   from opensingularDir
-  archiveName 'singular-platform-'+singularVersion+'.zip'
+  archiveName 'singular-platform-'+singularVersion+'.tar.gz'
 }
 
 task buildPlatform(dependsOn: ['configureWildFly', 'clean', 'createFolders', 'copyContents', 'createZip']) {
