@@ -1,5 +1,5 @@
 
-cation of JDK
+#Location of JDK
 JAVA_HOME=""
 
 ## Additionals args to include in startup
