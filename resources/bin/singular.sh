@@ -1,3 +1,4 @@
+#!/bin/sh
 
 #Location of JDK
 JAVA_HOME=""
