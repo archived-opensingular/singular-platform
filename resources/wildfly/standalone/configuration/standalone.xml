@@ -126,6 +126,9 @@
       <logger category="org.jboss.as.config">
         <level name="DEBUG"/>
       </logger>
+      <logger category="org.hibernate.SQL">
+      	<level name="DEBUG"/>
+      </logger>
       <logger category="sun.rmi">
         <level name="WARN"/>
       </logger>
@@ -373,8 +376,8 @@
         <https-listener name="https" socket-binding="https" security-realm="SingularRealm" max-post-size="10485760000"  verify-client="REQUESTED"/>
         <host name="default-host" alias="localhost">
           <location name="/" handler="welcome-content"/>
-          <filter-ref name="server-header"/>
-          <filter-ref name="x-powered-by-header"/>
+          <filter-ref name="gzipFilter" predicate="exists['%{o,Content-Type}'] and regex[pattern='(?:application/javascript|text/css|text/html|text/xml|application/json)(;.*)?', value=%{o,Content-Type}, full-match=true]"/>
+          <filter-ref name="Vary-header"/>
         </host>
       </server>
       <servlet-container name="default">
@@ -385,8 +388,8 @@
         <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
       </handlers>
       <filters>
-        <response-header name="server-header" header-name="Server" header-value="WildFly/9"/>
-        <response-header name="x-powered-by-header" header-name="X-Powered-By" header-value="Undertow/1"/>
+        <response-header name="Vary-header" header-name="Vary" header-value="Accept-Encoding"/>
+		<gzip name="gzipFilter"/>
       </filters>
     </subsystem>
     <subsystem xmlns="urn:jboss:domain:webservices:2.0">
