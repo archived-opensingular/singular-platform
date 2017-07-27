@@ -5,7 +5,7 @@ defaultTasks 'buildPlatform'
 project.ext {
   wildflyVersion='9.0.2.Final'
   opensingularDir='build/opensingular'
-  singularVersion = '1.0.2-SNAPSHOT'
+  singularVersion = '1.0.2'
 }
 
 task configureWildFly(type: Copy){
