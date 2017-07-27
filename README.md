@@ -1,8 +1,7 @@
-# singular-platform
+# Open SINGULAR
+Singular Plataform Runtime Environment
 
-Plataforma OpenSingular
-
-## Como construir
+## Build
 
 ```shell
 gradle 
