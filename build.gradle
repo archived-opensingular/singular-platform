@@ -3,71 +3,74 @@ apply plugin: 'java'
 defaultTasks 'buildPlatform'
 
 project.ext {
-  wildflyVersion='9.0.2.Final'
-  opensingularDir='build/opensingular'
-  singularVersion = '1.0.2'
+    wildflyVersion = '10.1.0.Final'
+    opensingularDir = 'build/opensingular'
+    singularVersion = '1.1.0'
 }
 
-task configureWildFly(type: Copy){
-  def wildflyzip = new File('wildfly.tar.gz')
-  if (!wildflyzip.exists()) {
-     new URL('http://download.jboss.org/wildfly/'+wildflyVersion+'/wildfly-'+wildflyVersion+'.tar.gz').withInputStream{ i -> wildflyzip.withOutputStream{ it << i }}
-  }   
-  def wildfly = new File('wildfly')
-  if (wildflyzip.exists() && !wildfly.exists()) {
-    from tarTree(resources.gzip('wildfly.tar.gz'))
-    into wildfly
-  }
+task configureWildFly(type: Copy) {
+    def wildflyTarGz = new File('wildfly.tar.gz')
+    if (!wildflyTarGz.exists()) {
+        new URL('http://download.jboss.org/wildfly/' + wildflyVersion + '/wildfly-' + wildflyVersion + '.tar.gz').withInputStream { i ->
+            wildflyTarGz.withOutputStream {
+                it << i
+            }
+        }
+    }
+    def wildfly = new File('wildfly')
+    if (wildflyTarGz.exists() && !wildfly.exists()) {
+        from tarTree(resources.gzip('wildfly.tar.gz'))
+        into wildfly
+    }
 }
 
 task createFolders {
-  doLast {
-    mkdir(opensingularDir)
-    mkdir(opensingularDir+'/wildfly')
-    mkdir(opensingularDir+'/lib')
-    mkdir(opensingularDir+'/tmp')
-    mkdir(opensingularDir+'/deploy')
-    mkdir(opensingularDir+'/bin')
-    mkdir(opensingularDir+'/logs')
-    mkdir(opensingularDir+'/conf')
-    mkdir(opensingularDir+'/runtime')
-	mkdir(opensingularDir+'/native')
-  }
+    doLast {
+        mkdir(opensingularDir)
+        mkdir(opensingularDir + '/wildfly')
+        mkdir(opensingularDir + '/lib')
+        mkdir(opensingularDir + '/tmp')
+        mkdir(opensingularDir + '/bin')
+        mkdir(opensingularDir + '/logs')
+        mkdir(opensingularDir + '/conf')
+        mkdir(opensingularDir + '/runtime')
+        mkdir(opensingularDir + '/native')
+    }
 }
 
 task copyContents {
-  doLast {
-    copy {
-      from 'resources/bin'
-      into opensingularDir+'/bin'
+    doLast {
+        copy {
+            from 'resources/bin'
+            into opensingularDir + '/bin'
+        }
+        copy {
+            from 'wildfly/wildfly-' + wildflyVersion
+            into opensingularDir + '/wildfly'
+        }
+        copy {
+            from 'resources/wildfly'
+            into opensingularDir + '/wildfly'
+        }
+        copy {
+            from 'resources/conf'
+            into opensingularDir + '/conf'
+        }
+        copy {
+            from 'resources/native'
+            into opensingularDir + '/native'
+        }
     }
-    copy {
-      from 'wildfly/wildfly-'+wildflyVersion
-      into opensingularDir+'/wildfly'
-    }
-    copy {
-      from 'resources/wildfly'
-      into opensingularDir+'/wildfly'
-    }
-    copy {
-      from 'resources/conf'
-      into opensingularDir+'/conf'
-    }
-	copy {
-      from 'resources/native'
-      into opensingularDir+'/native'
-    }
-  }
 }
 
-task createZip (type: Tar) {
-  compression = Compression.GZIP
-  from opensingularDir
-  archiveName 'singular-platform-'+singularVersion+'.tar.gz'
+task createZip(type: Tar) {
+    compression = Compression.GZIP
+    from opensingularDir
+    archiveName 'singular-platform-' + singularVersion + '.tar.gz'
 }
 
 task buildPlatform(dependsOn: ['configureWildFly', 'clean', 'createFolders', 'copyContents', 'createZip']) {
-  doLast {
-    println 'ok'
-  }
+    doLast {
+        println 'ok'
+    }
 }
