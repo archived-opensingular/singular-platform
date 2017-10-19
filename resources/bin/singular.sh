@@ -1,11 +1,5 @@
 #!/bin/sh
 
-#Location of JDK
-JAVA_HOME=""
-
-## Additionals args to include in startup
-JBOSS_OPTS=""
-
 ## THE JAVA OPTS
 JAVA_OPTS="$JAVA_OPTS -Xmx1536m"
 
@@ -47,7 +41,7 @@ echo ' / /_/ / /_/ /  __/ / / /__/ / / / / / /_/ / /_/ / / /_/ / /       '
 echo ' \____/ .___/\___/_/ /_/____/_/_/ /_/\__, /\__,_/_/\__,_/_/        '
 echo '     /_/                            /____/                         '
 echo '                                                                   '
-echo 'Iniciando Singular Platform  em ' $(date)
+echo 'Initializing Singular Platform - $(date)'
 echo ''
 
-sh $SINGULAR_WILDFLY/bin/standalone.sh $JBOSS_OPTS
+sh $SINGULAR_WILDFLY/bin/standalone.sh -Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true $@

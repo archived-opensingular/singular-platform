@@ -349,16 +349,11 @@
         <subsystem xmlns="urn:jboss:domain:undertow:3.1">
             <buffer-cache name="default"/>
             <server name="default-server">
-                <http-listener name="default" socket-binding="http" redirect-socket="https" max-post-size="10485760000"
-                               enable-http2="true"/>
-                <https-listener name="https" socket-binding="https" security-realm="SingularRealm"
-                                max-post-size="10485760000" verify-client="REQUESTED" enable-http2="true"/>
+                <http-listener name="default" socket-binding="http" redirect-socket="https" max-post-size="10485760000" />
+                <https-listener name="https" socket-binding="https" security-realm="SingularRealm" max-post-size="10485760000" verify-client="REQUESTED" />
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
-                    <filter-ref name="gzipFilter"
-                                predicate="exists('%{o,Content-Type}') and regex(pattern='(?:application/javascript|text/css|text/html|text/xml|application/json)(;.*)?', value=%{o,Content-Type}, full-match=true)"/>
-                    <filter-ref name="server-header"/>
-                    <filter-ref name="x-powered-by-header"/>
+                    <filter-ref name="gzipFilter" predicate="exists('%{o,Content-Type}') and regex(pattern='(?:application/javascript|text/css|text/html|text/xml|application/json)(;.*)?', value=%{o,Content-Type}, full-match=true)"/>
                     <filter-ref name="Vary-header"/>
                 </host>
             </server>
@@ -370,8 +365,6 @@
                 <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
             </handlers>
             <filters>
-                <response-header name="server-header" header-name="Server" header-value="WildFly/10"/>
-                <response-header name="x-powered-by-header" header-name="X-Powered-By" header-value="Undertow/1"/>
                 <response-header name="Vary-header" header-name="Vary" header-value="Accept-Encoding"/>
                 <gzip name="gzipFilter"/>
             </filters>
@@ -387,7 +380,6 @@
             </endpoint-config>
             <client-config name="Standard-Client-Config"/>
         </subsystem>
-        <subsystem xmlns="urn:jboss:domain:weld:3.0"/>
     </profile>
     <interfaces>
         <interface name="management">

@@ -6,10 +6,12 @@ project.ext {
     wildflyVersion = '10.1.0.Final'
     opensingularDir = 'build/opensingular'
     singularVersion = '1.1.0'
+    wildflyUntarFolder= 'wildfly'
+    wildflyTarFileName = 'wildfly.tar.gz'
 }
 
 task configureWildFly(type: Copy) {
-    def wildflyTarGz = new File('wildfly.tar.gz')
+    def wildflyTarGz = new File(wildflyTarFileName)
     if (!wildflyTarGz.exists()) {
         new URL('http://download.jboss.org/wildfly/' + wildflyVersion + '/wildfly-' + wildflyVersion + '.tar.gz').withInputStream { i ->
             wildflyTarGz.withOutputStream {
@@ -17,9 +19,9 @@ task configureWildFly(type: Copy) {
             }
         }
     }
-    def wildfly = new File('wildfly')
+    def wildfly = new File(wildflyUntarFolder)
     if (wildflyTarGz.exists() && !wildfly.exists()) {
-        from tarTree(resources.gzip('wildfly.tar.gz'))
+        from tarTree(resources.gzip(wildflyTarFileName))
         into wildfly
     }
 }
