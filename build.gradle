@@ -5,12 +5,13 @@ defaultTasks 'buildPlatform'
 project.ext {
     wildflyVersion = '10.1.0.Final'
     opensingularDir = 'build/opensingular'
-    singularVersion = '1.1.0'
+    singularVersion = '1.1.1-SNAPSHOT'
     wildflyUntarFolder= 'wildfly'
     wildflyTarFileName = 'wildfly.tar.gz'
 }
 
 task configureWildFly(type: Copy) {
+	file(wildflyUntarFolder).deleteDir()
     def wildflyTarGz = new File(wildflyTarFileName)
     if (!wildflyTarGz.exists()) {
         new URL('http://download.jboss.org/wildfly/' + wildflyVersion + '/wildfly-' + wildflyVersion + '.tar.gz').withInputStream { i ->

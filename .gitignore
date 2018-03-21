@@ -74,3 +74,4 @@ flow/test/singulardb.trace.db.old
 # Aid Diagramas      #
 ######################
 **/*.ucls
+/build/
