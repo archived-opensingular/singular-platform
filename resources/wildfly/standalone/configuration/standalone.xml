@@ -349,8 +349,8 @@
         <subsystem xmlns="urn:jboss:domain:undertow:3.1">
             <buffer-cache name="default"/>
             <server name="default-server">
-                <http-listener name="default" socket-binding="http" redirect-socket="https" max-post-size="10485760000" />
-                <https-listener name="https" socket-binding="https" security-realm="SingularRealm" max-post-size="10485760000" verify-client="REQUESTED" />
+                <http-listener name="default" socket-binding="http" redirect-socket="https" />
+                <https-listener name="https" socket-binding="https" security-realm="SingularRealm" verify-client="REQUESTED" />
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <filter-ref name="gzipFilter" predicate="exists('%{o,Content-Type}') and regex(pattern='(?:application/javascript|text/css|text/html|text/xml|application/json)(;.*)?', value=%{o,Content-Type}, full-match=true)"/>
